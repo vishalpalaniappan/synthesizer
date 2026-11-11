@@ -1,6 +1,7 @@
 {
     "$schema": "../schema/artha.schema.json",
     "metadata": "Meaning of Coffee Shop (simplified state for testing, will expand it later).",
+    "initialBehavior": "coffee_shop",
     "narrative": [
         {
             "name": "behavior",
@@ -26,11 +27,11 @@
             "body": [
                 {
                     "name": "structural_type",
-                    "type": "list"
+                    "value": "list"
                 },
                 {
                     "name": "list_contains",
-                    "values": ["Coffee", "Bagel"]
+                    "value": ["Coffee", "Bagel"]
                 }
             ]
         }
