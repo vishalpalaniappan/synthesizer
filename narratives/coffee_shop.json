@@ -1,0 +1,38 @@
+{
+    "$schema": "../schema/artha.schema.json",
+    "metadata": "Meaning of Coffee Shop (simplified state for testing, will expand it later).",
+    "narrative": [
+        {
+            "name": "behavior",
+            "behaviorName": "coffee_shop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "introduce",
+                    "alias": "shopping_cart",
+                    "participant": "Cart",
+                    "role": "shopping_cart"
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "item": "Coffee",
+                    "list": "shopping_cart"
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "Cart",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "type": "list"
+                },
+                {
+                    "name": "list_contains",
+                    "values": ["Coffee", "Bagel"]
+                }
+            ]
+        }
+    ]
+}

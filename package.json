@@ -1,0 +1,22 @@
+{
+    "name": "synthesizer",
+    "version": "0.0.0",
+    "type": "module",
+    "description": "Synthesizes meaning specified in Artha IR format into a python implementation.",
+    "main": "./src/index.js",
+    "scripts": {
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vishalpalaniappan/synthesizer.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/vishalpalaniappan/synthesizer/issues"
+    },
+    "homepage": "https://github.com/vishalpalaniappan/synthesizer#readme",
+    "dependencies": {
+        "ajv": "^8.20.0"
+    }
+}
