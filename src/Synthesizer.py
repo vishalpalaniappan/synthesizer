@@ -53,6 +53,18 @@ class Synthesizer:
         dest_folder = root_dir / "output" / "includes"
         shutil.copytree(src_folder, dest_folder, dirs_exist_ok=True)
 
+
+    def getParticipantStructuralType(self, name):
+        '''
+            Get the participant from the narrative.
+        '''
+        for node in self.narrative:
+            if node["name"] == "participant" and node["participantName"] == name:
+                for bodyNode in node["body"]:
+                    if bodyNode["name"] == "structural_type":
+                        return bodyNode["value"]
+
+
     def visit(self, astBody, narrative):
        '''
             Visit node recursively visit body of nodes.
@@ -83,6 +95,14 @@ class Synthesizer:
                     ))
                     astBody.append(call_node)
                 elif (type == "meta-primitive"):
-                    # Implement steps for handling meta primitive (ex. introduce needs
-                    # to be equality and the meta comes from participant (ex.list etc))
-                    pass
+
+                    if (node["name"] == "introduce"):
+                        participantType = self.getParticipantStructuralType(node["participant"])
+
+                        if(participantType == "list"):
+                            # could also be an initial value
+                            assignment_node = ast.Assign(
+                                targets=[ast.Name(id=node["alias"], ctx=ast.Store())],
+                                value=ast.List(elts=[], ctx=ast.Load())
+                            )
+                            astBody.append(assignment_node)
