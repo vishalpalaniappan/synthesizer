@@ -67,18 +67,22 @@ class Synthesizer:
                     returns=None
                 )
                 self.visit(func_node.body, node["body"])
-                print(ast.dump(func_node))
                 astBody.append(func_node)
             elif node["name"] == "participant":
                 pass
             else:
-                # This is temporary, I am just making the primitive name a call
-                # I will get type of primitive and make decision in the coming changes
-                # Only computable primitives will be called directly, the meta primitives
-                # need to be address (ex. introduce needs to be synthesized as assignment)
-                call_node = ast.Expr(value=ast.Call(
-                    func=ast.Name(id=node["name"], ctx=ast.Load()),
-                    args=[],
-                    keywords=[]
-                ))
-                astBody.append(call_node)
+                schema = get_primitive_schema(primitiveName = node["name"] + "-structure")
+                type = schema["properties"]["primitiveType"]["const"]
+
+                if (type == "computable-primitive"):
+                    # TODO: Still need to add args
+                    call_node = ast.Expr(value=ast.Call(
+                        func=ast.Name(id=node["name"], ctx=ast.Load()),
+                        args=[],
+                        keywords=[]
+                    ))
+                    astBody.append(call_node)
+                elif (type == "meta-primitive"):
+                    # Implement steps for handling meta primitive (ex. introduce needs
+                    # to be equality and the meta comes from participant (ex.list etc))
+                    pass
