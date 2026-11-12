@@ -1,4 +1,4 @@
-def insert_at_end(item, list):
+def insert_at_end_of_list(item, list):
     list.append(item)
     return list
 
