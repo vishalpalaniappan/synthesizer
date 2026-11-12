@@ -59,11 +59,54 @@ class Synthesizer:
             Get the participant from the narrative.
         '''
         for node in self.narrative:
-            if node["name"] == "participant" and node["participantName"] == name:
-                for bodyNode in node["body"]:
-                    if bodyNode["name"] == "structural_type":
-                        return bodyNode["value"]
 
+            if node["name"] != "participant" or node["participantName"] != name:
+                continue
+            
+            for bodyNode in node["body"]:
+                if bodyNode["name"] == "structural_type":
+                    return bodyNode["value"]
+
+    def synthesizeBehavior(self, behaviorNode, astBody):
+        '''
+            Process the behavior node and visit the children recursively
+            and add synthesized output into body of synthesized behavior
+        '''
+        # TODO: Have not synthesized behaviors
+        func_node = ast.FunctionDef(
+            name=behaviorNode["behaviorName"],
+            args=[],
+            body=[],
+            decorator_list=[],
+            returns=None
+        )
+        self.visit(func_node.body, behaviorNode["body"])
+        astBody.append(func_node)
+
+    def synthesizeComputablePrimitive(self, node):
+        '''
+            Synthesize computable primitive
+        '''
+        # TODO: Have not added arguments to call
+        return ast.Expr(value=ast.Call(
+            func=ast.Name(id=node["name"], ctx=ast.Load()),
+            args=[],
+            keywords=[]
+        ))
+
+    def processMetaPrimitive(self, node):   
+        '''
+            Process meta primitive node and return synthesized node.
+        '''     
+        # TODO: participant can also have initial value etc.
+        if (node["name"] == "introduce"):
+            participantType = self.getParticipantStructuralType(node["participant"])
+
+            if(participantType == "list"):
+               return ast.Assign(
+                    targets=[ast.Name(id=node["alias"], ctx=ast.Store())],
+                    value=ast.List(elts=[], ctx=ast.Load())
+                )
 
     def visit(self, astBody, narrative):
        '''
@@ -71,15 +114,7 @@ class Synthesizer:
        '''
        for node in narrative:
             if node["name"] == "behavior":
-                func_node = ast.FunctionDef(
-                    name=node["behaviorName"],
-                    args=[],
-                    body=[],
-                    decorator_list=[],
-                    returns=None
-                )
-                self.visit(func_node.body, node["body"])
-                astBody.append(func_node)
+                self.synthesizeBehavior(behaviorNode= node, astBody= astBody)
             elif node["name"] == "participant":
                 pass
             else:
@@ -87,22 +122,8 @@ class Synthesizer:
                 type = schema["properties"]["primitiveType"]["const"]
 
                 if (type == "computable-primitive"):
-                    # TODO: Still need to add args
-                    call_node = ast.Expr(value=ast.Call(
-                        func=ast.Name(id=node["name"], ctx=ast.Load()),
-                        args=[],
-                        keywords=[]
-                    ))
-                    astBody.append(call_node)
+                    astBody.append(self.synthesizeComputablePrimitive(node))
                 elif (type == "meta-primitive"):
-
-                    if (node["name"] == "introduce"):
-                        participantType = self.getParticipantStructuralType(node["participant"])
-
-                        if(participantType == "list"):
-                            # could also be an initial value
-                            assignment_node = ast.Assign(
-                                targets=[ast.Name(id=node["alias"], ctx=ast.Store())],
-                                value=ast.List(elts=[], ctx=ast.Load())
-                            )
-                            astBody.append(assignment_node)
+                    metaNode = self.processMetaPrimitive(node)
+                    if metaNode:
+                        astBody.append(metaNode)
