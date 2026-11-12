@@ -1,8 +1,7 @@
-import ast
+
 import sys
-import json
 from pathlib import Path
-from helper import get_primitive_schema
+from Synthesizer import Synthesizer
 
 def main(argv):
     # Read the narrative
@@ -11,9 +10,8 @@ def main(argv):
     with open(narrative_dir / "coffee_shop.json", "r") as f:
         narrative = f.read()
 
-    # Test accessing schema
-    found = get_primitive_schema("import")
-    print(found)
+    synthesizer = Synthesizer()
+    synthesizer.generateOutput()
 
 if "__main__" == __name__:
     sys.exit(main(sys.argv))
