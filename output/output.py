@@ -3,4 +3,12 @@ from includes.computable_legacy_primitives import *
 
 def coffee_shop():
     shopping_cart = []
-    insert_at_end_of_list()
+    visitShop()
+
+def visitShop():
+    terminal_display()
+    terminal_input()
+    checkIfUserChoseCoffee()
+
+def checkIfUserChoseCoffee():
+    equals()
