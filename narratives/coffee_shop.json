@@ -1,0 +1,115 @@
+{
+    "$schema": "../schema/artha.schema.json",
+    "metadata": "Meaning of Coffee Shop.",
+    "initialBehavior": "coffee_shop",
+    "narrative": [
+        {
+            "name": "behavior",
+            "behaviorName": "coffee_shop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "introduce",
+                    "alias": "shopping_cart",
+                    "participant": "Cart",
+                    "role": "shopping_cart"
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "visitShop",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "visitShop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "message": "enter c for coffee, anything else to exit"
+                },
+                {
+                    "name": "terminal_input",
+                    "alias": "user_choice"
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "checkIfUserChoseCoffee",
+                    "args": [
+                        {
+                            "name": "alias",
+                            "value": "user_chose_coffee"
+                        },
+                        {
+                            "name": "choice",
+                            "value": "user_choice"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "condition": "user_chose_coffee",
+                    "body": [
+                        {
+                            "name": "terminal_display",
+                            "message": "User Chose Coffee"
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "checkIfUserChoseCoffee",
+            "attributes": [
+                {
+                    "name": "user_choice",
+                    "value": ""
+                }
+            ],
+            "body": [
+                {
+                    "name": "equals",
+                    "alias": "userChoseCoffee",
+                    "value1": "user_choice",
+                    "value2": "c"
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "Cart",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "value": "list"
+                },
+                {
+                    "name": "list_contains",
+                    "value": ["Coffee", "Bagel"]
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "Menu",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "value": "string"
+                },
+                {
+                    "name": "initial_value",
+                    "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
+                }
+            ]
+        }
+    ]
+}
