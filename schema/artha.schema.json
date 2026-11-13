@@ -24,706 +24,839 @@
       "type": "string"
     },
     "narrative": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "$ref": "#/definitions/import"
-          },
-          {
-            "$ref": "#/definitions/participant"
-          },
-          {
-            "$ref": "#/definitions/behavior"
-          }
-        ]
-      }
+      "$ref": "#/$defs/recursiveObjectCheck"
     }
   },
-  "definitions": {
-    "import": {
-      "allOf": [
+  "$defs": {
+    "recursiveObjectCheck": {
+      "anyOf": [
         {
           "type": "object",
-          "properties": {
-            "type": {
-              "const": "import"
-            }
-          }
-        },
-        {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "$id": "./import.schema.json",
-          "title": "ImportSchema",
-          "description": "A schema definition for import meaning.",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "name": {
-              "type": "string",
-              "const": "import"
-            },
-            "file": {
-              "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "alias": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "name",
-            "file",
-            "alias"
-          ]
-        }
-      ]
-    },
-    "participant": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "type": {
-              "const": "participant"
-            }
-          }
-        },
-        {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "$id": "./participant.schema.json",
-          "title": "ParticipantSchema",
-          "description": "A schema for a participant in a narrative.",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "body": {
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./list_contains-structure.schema.json",
-                        "title": "list_contains",
-                        "description": "Structural schema for list_contains primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "list_contains"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "meta-primitive"
-                          },
-                          "value": {}
-                        },
-                        "required": [
-                          "name",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "list_contains"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./structural_type-structure.schema.json",
-                        "title": "structural_type",
-                        "description": "Structural schema for structural_type primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "structural_type"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "meta-primitive"
-                          },
-                          "value": {}
-                        },
-                        "required": [
-                          "name",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "structural_type"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "behavior"
                   }
+                },
+                "required": [
+                  "name"
                 ]
-              }
-            },
-            "name": {
-              "type": "string",
-              "const": "participant"
-            },
-            "id": {
-              "type": "string"
-            },
-            "participantName": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "body",
-            "name",
-            "participantName"
-          ]
-        }
-      ]
-    },
-    "behavior": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "type": {
-              "const": "behavior"
-            }
-          }
-        },
-        {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "$id": "./behavior.schema.json",
-          "title": "BehaviorSchema",
-          "description": "A schema for a behavior in a narrative.",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "name": {
-              "type": "string",
-              "const": "behavior"
-            },
-            "behaviorName": {
-              "type": "string"
-            },
-            "body": {
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./clear_list-structure.schema.json",
-                        "title": "clear_list",
-                        "description": "Structural schema for clear_list primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "clear_list",
-                            "x-invariant-metadata": [
-                              {
-                                "id": "1",
-                                "participants": [
-                                  "list"
-                                ],
-                                "property": "structuralType",
-                                "condition": [
-                                  "list"
-                                ],
-                                "description": "list must have structuralType List.",
-                                "invalidValues": [
-                                  {
-                                    "value": "string_value",
-                                    "description": "A string is provided as list participant"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "computable-primitive"
-                          },
-                          "list": {}
-                        },
-                        "required": [
-                          "name",
-                          "list"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "clear_list"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./equals-structure.schema.json",
-                        "title": "equals",
-                        "description": "Structural schema for equals primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "equals"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "computable-primitive"
-                          },
-                          "alias": {},
-                          "value1": {},
-                          "value2": {}
-                        },
-                        "required": [
-                          "name",
-                          "alias",
-                          "value1",
-                          "value2"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "equals"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./insert_at_end_of_list-structure.schema.json",
-                        "title": "insert_at_end_of_list",
-                        "description": "Structural schema for insert_at_end_of_list primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "insert_at_end_of_list",
-                            "x-invariant-metadata": [
-                              {
-                                "id": "1",
-                                "participants": [
-                                  "list"
-                                ],
-                                "property": "structural_type",
-                                "condition": [
-                                  "list"
-                                ],
-                                "description": "list must have structural_type List.",
-                                "invalidValues": [
-                                  {
-                                    "value": "string_value",
-                                    "description": "A string is provided as list participant"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "computable-primitive"
-                          },
-                          "item": {},
-                          "list": {}
-                        },
-                        "required": [
-                          "name",
-                          "item",
-                          "list"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "insert_at_end_of_list"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./terminal_display-structure.schema.json",
-                        "title": "terminal_display",
-                        "description": "Structural schema for terminal_display primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "terminal_display"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "computable-legacy-primitive"
-                          },
-                          "message": {}
-                        },
-                        "required": [
-                          "name",
-                          "message"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "terminal_display"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./terminal_input-structure.schema.json",
-                        "title": "terminal_input",
-                        "description": "Structural schema for terminal_input primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "terminal_input"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "computable-legacy-primitive"
-                          },
-                          "alias": {}
-                        },
-                        "required": [
-                          "name",
-                          "alias"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "terminal_input"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./if-structure.schema.json",
-                        "title": "if",
-                        "description": "Structural schema for if primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "if",
-                            "x-invariant-metadata": [
-                              {
-                                "id": "inv_1",
-                                "participants": [
-                                  "condition"
-                                ],
-                                "property": "structuralType",
-                                "condition": [
-                                  "boolean"
-                                ],
-                                "description": "the condition must be a boolean value",
-                                "invalidValues": [
-                                  {
-                                    "value": "string_value",
-                                    "description": "A string is provided as the condition"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "functional-primitive"
-                          },
-                          "condition": {}
-                        },
-                        "required": [
-                          "name",
-                          "condition"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "if"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./introduce-structure.schema.json",
-                        "title": "introduce",
-                        "description": "Structural schema for introduce primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "introduce"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "meta-primitive"
-                          },
-                          "alias": {},
-                          "role": {},
-                          "participant": {}
-                        },
-                        "required": [
-                          "name",
-                          "alias",
-                          "role",
-                          "participant"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "introduce"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "./yield-structure.schema.json",
-                        "title": "yield",
-                        "description": "Structural schema for yield primitive.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "$schema": {
-                            "type": "string",
-                            "description": "URI reference to the JSON schema."
-                          },
-                          "name": {
-                            "type": "string",
-                            "description": "Name of the primitive.",
-                            "const": "yield"
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "primitiveType": {
-                            "type": "string",
-                            "description": "Type of the primitive.",
-                            "const": "meta-primitive"
-                          },
-                          "alias": {}
-                        },
-                        "required": [
-                          "name",
-                          "alias"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "const": "yield"
-                          }
-                        },
-                        "required": [
-                          "name"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            },
-            "id": {
-              "type": "string"
-            },
-            "attributes": {
-              "type": "array",
-              "items": {
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./behavior.schema.json",
+                "title": "BehaviorSchema",
+                "description": "A schema for a behavior in a narrative.",
                 "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "const": "behavior"
+                  },
+                  "behaviorName": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "array"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "value"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "attributes",
+                  "body",
+                  "name",
+                  "behaviorName"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "invoke"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./invoke.schema.json",
+                "title": "InvokeSchema",
+                "description": "A schema for invoking custom meaning.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "const": "invoke"
+                  },
+                  "behaviorName": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "value"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "behaviorName",
+                  "name",
+                  "args"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "participant"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./participant.schema.json",
+                "title": "ParticipantSchema",
+                "description": "A schema for a participant in a narrative.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "body": {
+                    "type": "array"
+                  },
+                  "name": {
+                    "type": "string",
+                    "const": "participant"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "participantName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "body",
+                  "name",
+                  "participantName"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "import"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./import.schema.json",
+                "title": "ImportSchema",
+                "description": "A schema definition for import meaning.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "const": "import"
+                  },
+                  "file": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "alias": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "file",
+                  "alias"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "terminal_display"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./terminal_display-structure.schema.json",
+                "title": "terminal_display",
+                "description": "Structural schema for terminal_display primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "terminal_display"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-legacy-primitive"
+                  },
+                  "message": {}
+                },
+                "required": [
+                  "name",
+                  "message"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "terminal_input"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./terminal_input-structure.schema.json",
+                "title": "terminal_input",
+                "description": "Structural schema for terminal_input primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "terminal_input"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-legacy-primitive"
+                  },
+                  "alias": {}
+                },
+                "required": [
+                  "name",
+                  "alias"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "clear_list"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./clear_list-structure.schema.json",
+                "title": "clear_list",
+                "description": "Structural schema for clear_list primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "clear_list",
+                    "x-invariant-metadata": [
+                      {
+                        "id": "1",
+                        "participants": [
+                          "list"
+                        ],
+                        "property": "structuralType",
+                        "condition": [
+                          "list"
+                        ],
+                        "description": "list must have structuralType List.",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as list participant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-primitive"
+                  },
+                  "list": {}
+                },
+                "required": [
+                  "name",
+                  "list"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "equals"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./equals-structure.schema.json",
+                "title": "equals",
+                "description": "Structural schema for equals primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "equals"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-primitive"
+                  },
+                  "alias": {},
+                  "value1": {},
+                  "value2": {}
+                },
+                "required": [
+                  "name",
+                  "alias",
+                  "value1",
+                  "value2"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "insert_at_end_of_list"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./insert_at_end_of_list-structure.schema.json",
+                "title": "insert_at_end_of_list",
+                "description": "Structural schema for insert_at_end_of_list primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "insert_at_end_of_list",
+                    "x-invariant-metadata": [
+                      {
+                        "id": "1",
+                        "participants": [
+                          "list"
+                        ],
+                        "property": "structural_type",
+                        "condition": [
+                          "list"
+                        ],
+                        "description": "list must have structural_type List.",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as list participant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-primitive"
+                  },
+                  "item": {},
+                  "list": {}
+                },
+                "required": [
+                  "name",
+                  "item",
+                  "list"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "if"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./if-structure.schema.json",
+                "title": "if",
+                "description": "Structural schema for if primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "if",
+                    "x-invariant-metadata": [
+                      {
+                        "id": "inv_1",
+                        "participants": [
+                          "condition"
+                        ],
+                        "property": "structuralType",
+                        "condition": [
+                          "boolean"
+                        ],
+                        "description": "the condition must be a boolean value",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as the condition"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "functional-primitive"
+                  },
+                  "condition": {},
+                  "body": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "name",
+                  "condition",
+                  "body"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "initial_value"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./initial_value-structure.schema.json",
+                "title": "initial_value",
+                "description": "Structural schema for initial_value primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "initial_value"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "meta-primitive"
+                  },
+                  "value": {}
+                },
                 "required": [
                   "name",
                   "value"
-                ],
+                ]
+              }
+            },
+            {
+              "if": {
                 "properties": {
                   "name": {
+                    "const": "introduce"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./introduce-structure.schema.json",
+                "title": "introduce",
+                "description": "Structural schema for introduce primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "introduce"
+                  },
+                  "id": {
                     "type": "string"
                   },
-                  "value": {
-                    "type": "string"
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "meta-primitive"
+                  },
+                  "alias": {},
+                  "role": {},
+                  "participant": {}
+                },
+                "required": [
+                  "name",
+                  "alias",
+                  "role",
+                  "participant"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "list_contains"
                   }
-                }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./list_contains-structure.schema.json",
+                "title": "list_contains",
+                "description": "Structural schema for list_contains primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "list_contains"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "meta-primitive"
+                  },
+                  "value": {}
+                },
+                "required": [
+                  "name",
+                  "value"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "structural_type"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./structural_type-structure.schema.json",
+                "title": "structural_type",
+                "description": "Structural schema for structural_type primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "structural_type"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "meta-primitive"
+                  },
+                  "value": {}
+                },
+                "required": [
+                  "name",
+                  "value"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "yield"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./yield-structure.schema.json",
+                "title": "yield",
+                "description": "Structural schema for yield primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "yield"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "meta-primitive"
+                  },
+                  "alias": {}
+                },
+                "required": [
+                  "name",
+                  "alias"
+                ]
+              }
+            }
+          ],
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/recursiveObjectCheck"
               }
             }
           },
-          "required": [
-            "attributes",
-            "body",
-            "name",
-            "behaviorName"
+          "additionalProperties": {
+            "$ref": "#/$defs/recursiveObjectCheck"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recursiveObjectCheck"
+          }
+        },
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
           ]
         }
       ]
+    }
+  },
+  "manifest": {
+    "$schema": "./manifest.schema.json",
+    "primitiveTypes": [
+      "computable-primitive",
+      "functional-primitive",
+      "computable-legacy-primitive",
+      "meta-primitive"
+    ],
+    "structuralTypes": [
+      "behavior",
+      "participant",
+      "import",
+      "invoke"
+    ],
+    "structure": {
+      "behavior": {
+        "contains": {
+          "computable-primitive": {
+            "excludes": []
+          },
+          "computable-legacy-primitive": {
+            "excludes": []
+          },
+          "functional-primitive": {
+            "excludes": []
+          },
+          "meta-primitive": {
+            "excludes": [
+              "list_contains",
+              "structural_type"
+            ]
+          }
+        }
+      },
+      "participant": {
+        "contains": {
+          "meta-primitive": {
+            "excludes": [
+              "introduce",
+              "yield"
+            ]
+          }
+        }
+      },
+      "import": {}
     }
   }
 }
