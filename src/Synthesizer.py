@@ -83,13 +83,13 @@ class Synthesizer:
         self.visit(func_node.body, behaviorNode["body"])
         astBody.append(func_node)
 
-    def synthesizeComputablePrimitive(self, node):
+    def synthesizeCall(self, name):
         '''
             Synthesize computable primitive
         '''
         # TODO: Have not added arguments to call
         return ast.Expr(value=ast.Call(
-            func=ast.Name(id=node["name"], ctx=ast.Load()),
+            func=ast.Name(id=name, ctx=ast.Load()),
             args=[],
             keywords=[]
         ))
@@ -117,12 +117,15 @@ class Synthesizer:
                 self.synthesizeBehavior(behaviorNode= node, astBody= astBody)
             elif node["name"] == "participant":
                 pass
+            elif node["name"] == "invoke":
+                astBody.append(self.synthesizeCall(node["behaviorName"]))
             else:
                 schema = get_primitive_schema(primitiveName = node["name"] + "-structure")
                 type = schema["properties"]["primitiveType"]["const"]
 
-                if (type == "computable-primitive"):
-                    astBody.append(self.synthesizeComputablePrimitive(node))
+                if (type == "computable-primitive" or type == "computable-legacy-primitive"):
+                    print(node)
+                    astBody.append(self.synthesizeCall(node["name"]))
                 elif (type == "meta-primitive"):
                     metaNode = self.processMetaPrimitive(node)
                     if metaNode:
