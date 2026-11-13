@@ -9,6 +9,9 @@ def visitShop():
     terminal_display()
     terminal_input()
     checkIfUserChoseCoffee()
+    if user_chose_coffee:
+        terminal_display()
+        visitShop()
 
 def checkIfUserChoseCoffee():
     equals()

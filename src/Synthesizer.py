@@ -9,7 +9,10 @@ class Synthesizer:
         self.genAst = ast.Module([], [])
         self.narrative = arthaIR["narrative"]
         self.addImports()
+        self.stack = []
         self.visit(self.genAst.body, self.narrative)
+
+        print(ast.dump(self.genAst))
 
     def addImports(self):
         '''
@@ -83,6 +86,21 @@ class Synthesizer:
         self.visit(func_node.body, behaviorNode["body"])
         astBody.append(func_node)
 
+    def synthesizeIf(self, ifNode, astBody):
+        '''
+            Process the if node and visit the children recursively
+            and add synthesized output into body of synthesized behavior
+        '''
+        print(ifNode)
+        # TODO: Have not synthesized behaviors
+        synthesizedIfNode = ast.If(
+            test=ast.Name(id=ifNode["condition"], ctx=ast.Load()),
+            body=[],
+            orelse=[]
+        )
+        self.visit(synthesizedIfNode.body, ifNode["body"])
+        astBody.append(synthesizedIfNode)
+
     def synthesizeCall(self, name):
         '''
             Synthesize computable primitive
@@ -119,6 +137,8 @@ class Synthesizer:
                 pass
             elif node["name"] == "invoke":
                 astBody.append(self.synthesizeCall(node["behaviorName"]))
+            elif node["name"] == "if":
+                self.synthesizeIf(ifNode = node, astBody = astBody)
             else:
                 schema = get_primitive_schema(primitiveName = node["name"] + "-structure")
                 type = schema["properties"]["primitiveType"]["const"]
