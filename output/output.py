@@ -8,7 +8,7 @@ def coffee_shop():
 def visitShop():
     terminal_display()
     terminal_input()
-    checkIfUserChoseCoffee()
+    user_chose_coffee = checkIfUserChoseCoffee()
     if user_chose_coffee:
         terminal_display()
         visitShop()

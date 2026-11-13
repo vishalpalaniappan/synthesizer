@@ -2,6 +2,7 @@ import ast
 import shutil
 from pathlib import Path
 from helper import get_primitive_schema
+from helper import getArgsFromNode
 
 class Synthesizer:
 
@@ -11,8 +12,6 @@ class Synthesizer:
         self.addImports()
         self.stack = []
         self.visit(self.genAst.body, self.narrative)
-
-        print(ast.dump(self.genAst))
 
     def addImports(self):
         '''
@@ -101,16 +100,30 @@ class Synthesizer:
         self.visit(synthesizedIfNode.body, ifNode["body"])
         astBody.append(synthesizedIfNode)
 
-    def synthesizeCall(self, name):
+    def synthesizeCall(self, name, node):
         '''
             Synthesize computable primitive
         '''
         # TODO: Have not added arguments to call
-        return ast.Expr(value=ast.Call(
+        alias = None
+        if "args" in node:
+            for arg in node["args"]:
+                if arg["name"] == "alias":
+                    alias = arg["value"]
+
+        call = ast.Call(
             func=ast.Name(id=name, ctx=ast.Load()),
             args=[],
             keywords=[]
-        ))
+        )
+
+        if alias:
+            return ast.Assign(
+                targets=[ast.Name(id=alias, ctx=ast.Store())],
+                value=call
+            )
+        else:
+            return ast.Expr(value=call)
 
     def processMetaPrimitive(self, node):   
         '''
@@ -121,7 +134,7 @@ class Synthesizer:
             participantType = self.getParticipantStructuralType(node["participant"])
 
             if(participantType == "list"):
-               return ast.Assign(
+                return ast.Assign(
                     targets=[ast.Name(id=node["alias"], ctx=ast.Store())],
                     value=ast.List(elts=[], ctx=ast.Load())
                 )
@@ -136,7 +149,7 @@ class Synthesizer:
             elif node["name"] == "participant":
                 pass
             elif node["name"] == "invoke":
-                astBody.append(self.synthesizeCall(node["behaviorName"]))
+                astBody.append(self.synthesizeCall(node["behaviorName"], node))
             elif node["name"] == "if":
                 self.synthesizeIf(ifNode = node, astBody = astBody)
             else:
@@ -145,7 +158,7 @@ class Synthesizer:
 
                 if (type == "computable-primitive" or type == "computable-legacy-primitive"):
                     print(node)
-                    astBody.append(self.synthesizeCall(node["name"]))
+                    astBody.append(self.synthesizeCall(node["name"], node))
                 elif (type == "meta-primitive"):
                     metaNode = self.processMetaPrimitive(node)
                     if metaNode:
