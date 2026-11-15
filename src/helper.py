@@ -1,4 +1,5 @@
 import json
+import jsonata
 from pathlib import Path
 
 schema_path = Path(__file__).resolve().parent.parent / "schema" / "artha.schema.json"
@@ -29,3 +30,6 @@ def get_primitive_schema(primitiveName: str):
         return None
 
     return search(data)
+
+def exec(expression: str, item):
+    return jsonata.Jsonata(expression).evaluate(item)
