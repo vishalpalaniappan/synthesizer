@@ -12,3 +12,5 @@ def visitShop():
     if user_chose_coffee:
         terminal_display(message='User Chose Coffee')
         visitShop()
+if __name__ == '__main__':
+    coffee_shop()

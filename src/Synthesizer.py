@@ -10,9 +10,11 @@ class Synthesizer:
     def __init__(self, arthaIR):
         self.genAst = ast.Module([], [])
         self.narrative = arthaIR["narrative"]
+        self.initialBehavior = arthaIR["initialBehavior"]
         self.addImports()
         self.stack = []
         self.visit(self.genAst.body, self.narrative)
+        self.addInitial()
 
     def addImports(self):
         '''
@@ -32,6 +34,25 @@ class Synthesizer:
                 level=0
             )
         )
+
+    def addInitial(self):
+        if_node = ast.If(
+            test=ast.Compare(
+                left=ast.Name(id='__name__', ctx=ast.Load()),
+                ops=[ast.Eq()],
+                comparators=[ast.Constant(value='__main__')]
+            ),
+            body=[
+                ast.Expr(ast.Call(
+                    func=ast.Name(id=self.initialBehavior, ctx=ast.Load()),
+                    args=[],
+                    keywords=[]
+                ))
+            ],
+            orelse=[]
+        )
+        self.genAst.body.append(if_node)
+
 
     def generateOutput(self):
         '''
