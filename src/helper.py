@@ -1,4 +1,5 @@
 import json
+import ast
 import jsonata
 from pathlib import Path
 
@@ -33,3 +34,26 @@ def get_primitive_schema(primitiveName: str):
 
 def exec(expression: str, item):
     return jsonata.Jsonata(expression).evaluate(item)
+
+def generateEntryBlock(initialBehaviorName):
+    '''
+        Generates the entry of the python script.
+
+        if __name__ == "__main__":
+            <initialBehaviorName>()
+    '''
+    return ast.If(
+        test=ast.Compare(
+            left=ast.Name(id='__name__', ctx=ast.Load()),
+            ops=[ast.Eq()],
+            comparators=[ast.Constant(value='__main__')]
+        ),
+        body=[
+            ast.Expr(ast.Call(
+                func=ast.Name(id=initialBehaviorName, ctx=ast.Load()),
+                args=[],
+                keywords=[]
+            ))
+        ],
+        orelse=[]
+    )

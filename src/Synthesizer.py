@@ -3,6 +3,7 @@ import jsonata
 from pathlib import Path
 import shutil
 from helper import get_primitive_schema
+from helper import generateEntryBlock
 from helper import exec
 
 class Synthesizer:
@@ -36,22 +37,7 @@ class Synthesizer:
         )
 
     def addInitial(self):
-        if_node = ast.If(
-            test=ast.Compare(
-                left=ast.Name(id='__name__', ctx=ast.Load()),
-                ops=[ast.Eq()],
-                comparators=[ast.Constant(value='__main__')]
-            ),
-            body=[
-                ast.Expr(ast.Call(
-                    func=ast.Name(id=self.initialBehavior, ctx=ast.Load()),
-                    args=[],
-                    keywords=[]
-                ))
-            ],
-            orelse=[]
-        )
-        self.genAst.body.append(if_node)
+        self.genAst.body.append(generateEntryBlock(self.initialBehavior))
 
 
     def generateOutput(self):
@@ -76,20 +62,6 @@ class Synthesizer:
         src_folder = root_dir / "includes"
         dest_folder = root_dir / "output" / "includes"
         shutil.copytree(src_folder, dest_folder, dirs_exist_ok=True)
-
-
-    def getParticipantStructuralType(self, name):
-        '''
-            Get the participant from the narrative.
-        '''
-        for node in self.narrative:
-
-            if node["name"] != "participant" or node["participantName"] != name:
-                continue
-            
-            for bodyNode in node["body"]:
-                if bodyNode["name"] == "structural_type":
-                    return bodyNode["value"]
 
     def synthesizeBehavior(self, behaviorNode, astBody):
         '''
@@ -123,7 +95,7 @@ class Synthesizer:
 
     def synthesizeCall(self, name, node):
         '''
-            Synthesize computable primitive
+            Synthesize computable primitive (synthesize args, alias and call)
         '''
         alias = jsonata.Jsonata("alias.aliasName").evaluate(node)
 
@@ -186,7 +158,6 @@ class Synthesizer:
                 type = schema["properties"]["primitiveType"]["const"]
 
                 if (type == "computable-primitive" or type == "computable-legacy-primitive"):
-                    print(node)
                     astBody.append(self.synthesizeCall(node["name"], node))
                 elif (type == "meta-primitive"):
                     metaNode = self.processMetaPrimitive(node)
