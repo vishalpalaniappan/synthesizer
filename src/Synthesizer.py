@@ -108,7 +108,7 @@ class Synthesizer:
 
         args = []
         for arg in node["args"]:
-            if (arg["argType"] == "name"):
+            if (arg["argType"] == "const"):
                 args.append(
                     ast.keyword(arg=arg["argName"], value=ast.Constant(value=arg["value"]))
                 )

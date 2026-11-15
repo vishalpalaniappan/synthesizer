@@ -6,9 +6,9 @@ def coffee_shop():
     visitShop()
 
 def visitShop():
-    terminal_display()
+    terminal_display(message='Message to display')
     user_choice = terminal_input()
-    user_chose_coffee = equals(value1='user_choice', value2='coffee')
+    user_chose_coffee = equals(value1=user_choice, value2='coffee')
     if user_chose_coffee:
-        terminal_display()
+        terminal_display(message='User Chose Coffee')
         visitShop()

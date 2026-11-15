@@ -71,7 +71,7 @@
                         },
                         {
                             "argName": "value2",
-                            "argType": "name",
+                            "argType": "const",
                             "value": "coffee"
                         }
                     ]
