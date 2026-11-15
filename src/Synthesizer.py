@@ -54,7 +54,7 @@ class Synthesizer:
 
         # Unparse the ast
         ast.fix_missing_locations(self.genAst)
-        output_file = output_dir / "output.py"
+        output_file = output_dir / f"{self.initialBehavior}.py"
         with open(output_file, "w") as f:
             f.write(ast.unparse(self.genAst))
 

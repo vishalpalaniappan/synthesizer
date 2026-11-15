@@ -45,7 +45,7 @@
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "Message to display"
+                            "value": "Enter c to select coffee, anything else to exit."
                         }
                     ]
                 },
@@ -72,7 +72,7 @@
                         {
                             "argName": "value2",
                             "argType": "const",
-                            "value": "coffee"
+                            "value": "c"
                         }
                     ]
                 },
@@ -92,7 +92,7 @@
                                 {
                                     "argName": "message",
                                     "argType": "const",
-                                    "value": "User Chose Coffee"
+                                    "value": "User chose to add coffee to cart."
                                 }   
                             ]
                         },
