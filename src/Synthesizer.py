@@ -84,9 +84,15 @@ class Synthesizer:
             Process the if node and visit the children recursively
             and add synthesized output into body of synthesized behavior
         '''
-        condition = exec("args[argName = 'condition'].value", ifNode)
+        conditionArg = exec("args[argName = 'condition']", ifNode)
+    
+        if (conditionArg["argType"] == "const"):
+            test = ast.Constant(value= conditionArg["value"])
+        elif (conditionArg["argType"] == "name"):
+            test = ast.Name(id= conditionArg["value"])
+
         synthesizedIfNode = ast.If(
-            test=ast.Name(id=condition, ctx=ast.Load()),
+            test=test,
             body=[],
             orelse=[]
         )

@@ -81,7 +81,7 @@
                     "args": [
                         {
                             "argName": "condition",
-                            "argType": "const",
+                            "argType": "name",
                             "value": "user_chose_coffee"
                         }
                     ],
