@@ -1,8 +1,9 @@
 import ast
-import shutil
+import jsonata
 from pathlib import Path
+import shutil
 from helper import get_primitive_schema
-from helper import getArgsFromNode
+from helper import exec
 
 class Synthesizer:
 
@@ -90,10 +91,9 @@ class Synthesizer:
             Process the if node and visit the children recursively
             and add synthesized output into body of synthesized behavior
         '''
-        print(ifNode)
-        # TODO: Have not synthesized behaviors
+        condition = exec("args[argName = 'condition'].value", ifNode)
         synthesizedIfNode = ast.If(
-            test=ast.Name(id=ifNode["condition"], ctx=ast.Load()),
+            test=ast.Name(id=condition, ctx=ast.Load()),
             body=[],
             orelse=[]
         )
@@ -104,16 +104,22 @@ class Synthesizer:
         '''
             Synthesize computable primitive
         '''
-        # TODO: Have not added arguments to call
-        alias = None
-        if "args" in node:
-            for arg in node["args"]:
-                if arg["name"] == "alias":
-                    alias = arg["value"]
+        alias = jsonata.Jsonata("alias.aliasName").evaluate(node)
+
+        args = []
+        for arg in node["args"]:
+            if (arg["argType"] == "name"):
+                args.append(
+                    ast.keyword(arg=arg["argName"], value=ast.Constant(value=arg["value"]))
+                )
+            elif (arg["argType"] == "name"):
+                args.append(
+                    ast.keyword(arg=arg["argName"], value=ast.Name(id=arg["value"]))
+                )
 
         call = ast.Call(
             func=ast.Name(id=name, ctx=ast.Load()),
-            args=[],
+            args=args,
             keywords=[]
         )
 
@@ -131,11 +137,13 @@ class Synthesizer:
         '''     
         # TODO: participant can also have initial value etc.
         if (node["name"] == "introduce"):
-            participantType = self.getParticipantStructuralType(node["participant"])
+            alias = exec("alias.aliasName", node)
+            participant = exec("args[argName = 'role'].value", node)
+            participantType = exec(f"**[participantName = '{participant}'].body[name = 'structural_type'].args[value].value",self.narrative)
 
             if(participantType == "list"):
                 return ast.Assign(
-                    targets=[ast.Name(id=node["alias"], ctx=ast.Store())],
+                    targets=[ast.Name(id=alias, ctx=ast.Store())],
                     value=ast.List(elts=[], ctx=ast.Load())
                 )
 
@@ -153,7 +161,7 @@ class Synthesizer:
             elif node["name"] == "if":
                 self.synthesizeIf(ifNode = node, astBody = astBody)
             else:
-                schema = get_primitive_schema(primitiveName = node["name"] + "-structure")
+                schema = get_primitive_schema(primitiveName = node["name"])
                 type = schema["properties"]["primitiveType"]["const"]
 
                 if (type == "computable-primitive" or type == "computable-legacy-primitive"):
