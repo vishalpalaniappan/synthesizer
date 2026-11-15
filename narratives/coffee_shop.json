@@ -1,5 +1,5 @@
 {
-    "$schema": "../schema/artha.schema.json",
+    "$schema": "https://vishalpalaniappan.github.io/artha-primitives/img/artha.schema.json",
     "metadata": "Meaning of Coffee Shop.",
     "initialBehavior": "coffee_shop",
     "narrative": [
@@ -10,9 +10,22 @@
             "body": [
                 {
                     "name": "introduce",
-                    "alias": "shopping_cart",
-                    "participant": "Cart",
-                    "role": "shopping_cart"
+                    "alias": {
+                        "aliasName": "shopping_cart",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "Cart"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "shopping_cart"
+                        }
+                    ]
                 },
                 {
                     "name": "invoke",
@@ -28,33 +41,60 @@
             "body": [
                 {
                     "name": "terminal_display",
-                    "message": "enter c for coffee, anything else to exit"
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Message to display"
+                        }
+                    ]
                 },
                 {
                     "name": "terminal_input",
-                    "alias": "user_choice"
+                    "alias": {
+                        "aliasName": "user_choice",
+                        "introduce": true
+                    },
+                    "args": []
                 },
                 {
-                    "name": "invoke",
-                    "behaviorName": "checkIfUserChoseCoffee",
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_coffee",
+                        "introduce": true
+                    },
                     "args": [
                         {
-                            "name": "alias",
-                            "value": "user_chose_coffee"
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
                         },
                         {
-                            "name": "choice",
-                            "value": "user_choice"
+                            "argName": "value2",
+                            "argType": "name",
+                            "value": "coffee"
                         }
                     ]
                 },
                 {
                     "name": "if",
-                    "condition": "user_chose_coffee",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "const",
+                            "value": "user_chose_coffee"
+                        }
+                    ],
                     "body": [
                         {
                             "name": "terminal_display",
-                            "message": "User Chose Coffee"
+                            "args": [
+                                {
+                                    "argName": "message",
+                                    "argType": "const",
+                                    "value": "User Chose Coffee"
+                                }   
+                            ]
                         },
                         {
                             "name": "invoke",
@@ -66,34 +106,28 @@
             ]
         },
         {
-            "name": "behavior",
-            "behaviorName": "checkIfUserChoseCoffee",
-            "attributes": [
-                {
-                    "name": "user_choice",
-                    "value": ""
-                }
-            ],
-            "body": [
-                {
-                    "name": "equals",
-                    "alias": "userChoseCoffee",
-                    "value1": "user_choice",
-                    "value2": "c"
-                }
-            ]
-        },
-        {
             "name": "participant",
             "participantName": "Cart",
             "body": [
                 {
                     "name": "structural_type",
-                    "value": "list"
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "list"
+                        }
+                    ]
                 },
                 {
                     "name": "list_contains",
-                    "value": ["Coffee", "Bagel"]
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": ["Coffee", "Bagel"]
+                        }
+                    ]
                 }
             ]
         },
@@ -103,11 +137,23 @@
             "body": [
                 {
                     "name": "structural_type",
-                    "value": "string"
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "string"
+                        }
+                    ]
                 },
                 {
                     "name": "initial_value",
-                    "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
+                        }
+                    ]
                 }
             ]
         }

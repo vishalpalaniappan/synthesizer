@@ -70,10 +70,23 @@
                     "items": {
                       "type": "object",
                       "required": [
-                        "name"
+                        "argName",
+                        "value",
+                        "argType"
                       ],
                       "properties": {
-                        "name": {
+                        "argName": {
+                          "type": "string"
+                        },
+                        "argType": {
+                          "type": "string",
+                          "description": "Type of arg value (name or const).",
+                          "enum": [
+                            "name",
+                            "const"
+                          ]
+                        },
+                        "value": {
                           "type": "string"
                         }
                       }
@@ -117,17 +130,39 @@
                   "id": {
                     "type": "string"
                   },
+                  "alias": {
+                    "type": "object",
+                    "description": "The optional alias for the primitive.",
+                    "properties": {
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "description": "Structural type of the alias."
+                      }
+                    },
+                    "required": [
+                      "aliasStructuralType"
+                    ]
+                  },
                   "args": {
                     "type": "array",
                     "items": {
                       "type": "object",
                       "required": [
-                        "name",
-                        "value"
+                        "argName",
+                        "value",
+                        "argType"
                       ],
                       "properties": {
-                        "name": {
+                        "argName": {
                           "type": "string"
+                        },
+                        "argType": {
+                          "type": "string",
+                          "description": "Type of arg value (name or const).",
+                          "enum": [
+                            "name",
+                            "const"
+                          ]
                         },
                         "value": {
                           "type": "string"
@@ -213,7 +248,17 @@
                     "type": "string"
                   },
                   "alias": {
-                    "type": "string"
+                    "type": "object",
+                    "description": "The optional alias for the primitive.",
+                    "properties": {
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "description": "Structural type of the alias."
+                      }
+                    },
+                    "required": [
+                      "aliasStructuralType"
+                    ]
                   }
                 },
                 "required": [
@@ -236,11 +281,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./terminal_display-structure.schema.json",
+                "$id": "./terminal_display.schema.json",
                 "title": "terminal_display",
                 "description": "Structural schema for terminal_display primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -259,12 +308,60 @@
                     "description": "Type of the primitive.",
                     "const": "computable-legacy-primitive"
                   },
-                  "message": {}
-                },
-                "required": [
-                  "name",
-                  "message"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "message"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "aliasName"
+                    ],
+                    "properties": {
+                      "aliasName": {
+                        "type": "string"
+                      },
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "const": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                }
               }
             },
             {
@@ -280,11 +377,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./terminal_input-structure.schema.json",
+                "$id": "./terminal_input.schema.json",
                 "title": "terminal_input",
                 "description": "Structural schema for terminal_input primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -303,12 +404,32 @@
                     "description": "Type of the primitive.",
                     "const": "computable-legacy-primitive"
                   },
-                  "alias": {}
-                },
-                "required": [
-                  "name",
-                  "alias"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                  },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "aliasName"
+                    ],
+                    "properties": {
+                      "aliasName": {
+                        "type": "string"
+                      },
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "const": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                }
               }
             },
             {
@@ -324,11 +445,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./clear_list-structure.schema.json",
+                "$id": "./clear_list.schema.json",
                 "title": "clear_list",
                 "description": "Structural schema for clear_list primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -366,12 +491,40 @@
                     "description": "Type of the primitive.",
                     "const": "computable-primitive"
                   },
-                  "list": {}
-                },
-                "required": [
-                  "name",
-                  "list"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "list"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -387,11 +540,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./equals-structure.schema.json",
+                "$id": "./equals.schema.json",
                 "title": "equals",
                 "description": "Structural schema for equals primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -410,16 +567,82 @@
                     "description": "Type of the primitive.",
                     "const": "computable-primitive"
                   },
-                  "alias": {},
-                  "value1": {},
-                  "value2": {}
-                },
-                "required": [
-                  "name",
-                  "alias",
-                  "value1",
-                  "value2"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value1"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value2"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "aliasName"
+                    ],
+                    "properties": {
+                      "aliasName": {
+                        "type": "string"
+                      },
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "const": "boolean"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                }
               }
             },
             {
@@ -435,11 +658,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./insert_at_end_of_list-structure.schema.json",
+                "$id": "./insert_at_end_of_list.schema.json",
                 "title": "insert_at_end_of_list",
                 "description": "Structural schema for insert_at_end_of_list primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -477,14 +704,62 @@
                     "description": "Type of the primitive.",
                     "const": "computable-primitive"
                   },
-                  "item": {},
-                  "list": {}
-                },
-                "required": [
-                  "name",
-                  "item",
-                  "list"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "item"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "list"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -500,11 +775,16 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./if-structure.schema.json",
+                "$id": "./if.schema.json",
                 "title": "if",
                 "description": "Structural schema for if primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args",
+                  "body"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -542,16 +822,43 @@
                     "description": "Type of the primitive.",
                     "const": "functional-primitive"
                   },
-                  "condition": {},
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "condition"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
                   "body": {
                     "type": "array"
                   }
-                },
-                "required": [
-                  "name",
-                  "condition",
-                  "body"
-                ]
+                }
               }
             },
             {
@@ -567,11 +874,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./initial_value-structure.schema.json",
+                "$id": "./initial_value.schema.json",
                 "title": "initial_value",
                 "description": "Structural schema for initial_value primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -590,12 +901,40 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "value": {}
-                },
-                "required": [
-                  "name",
-                  "value"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -611,11 +950,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./introduce-structure.schema.json",
+                "$id": "./introduce.schema.json",
                 "title": "introduce",
                 "description": "Structural schema for introduce primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -634,16 +977,86 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "alias": {},
-                  "role": {},
-                  "participant": {}
-                },
-                "required": [
-                  "name",
-                  "alias",
-                  "role",
-                  "participant"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "role"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "participant"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "aliasName"
+                    ],
+                    "properties": {
+                      "aliasName": {
+                        "type": "string"
+                      },
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "const": "boolean"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                }
               }
             },
             {
@@ -659,11 +1072,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./list_contains-structure.schema.json",
+                "$id": "./list_contains.schema.json",
                 "title": "list_contains",
                 "description": "Structural schema for list_contains primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -682,12 +1099,40 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "value": {}
-                },
-                "required": [
-                  "name",
-                  "value"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -703,11 +1148,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./structural_type-structure.schema.json",
+                "$id": "./structural_type.schema.json",
                 "title": "structural_type",
                 "description": "Structural schema for structural_type primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -726,12 +1175,40 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "value": {}
-                },
-                "required": [
-                  "name",
-                  "value"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -747,11 +1224,15 @@
               },
               "then": {
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "$id": "./yield-structure.schema.json",
+                "$id": "./yield.schema.json",
                 "title": "yield",
                 "description": "Structural schema for yield primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -770,12 +1251,40 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "alias": {}
-                },
-                "required": [
-                  "name",
-                  "alias"
-                ]
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "alias"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             }
           ],
