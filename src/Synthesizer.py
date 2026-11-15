@@ -21,20 +21,14 @@ class Synthesizer:
         '''
             Adds the imports to call the computable primitives
         '''
-        self.genAst.body.append(
-            ast.ImportFrom(
-                module="includes.computable_primitives",
-                names=[ast.alias(name="*")],
-                level=0
-            )
-        )
-        self.genAst.body.append(
-            ast.ImportFrom(
-                module="includes.computable_legacy_primitives",
-                names=[ast.alias(name="*")],
-                level=0
-            )
-        )
+        imports = [
+            "from includes.computable_primitives import *",
+            "from includes.computable_legacy_primitives import *",
+            "from includes.LoggingHelper import semanticLogger",
+            "from includes.WorldState import worldStateManager"
+        ]
+        importAst = ast.parse("\n".join(imports))
+        self.genAst.body.append(importAst.body)
 
     def addInitial(self):
         self.genAst.body.append(generateEntryBlock(self.initialBehavior))
