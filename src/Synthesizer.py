@@ -62,10 +62,20 @@ class Synthesizer:
             Process the behavior node and visit the children recursively
             and add synthesized output into body of synthesized behavior
         '''
-        # TODO: Have not synthesized behaviors
+        
+        # TODO: Need to extend this, if arg type is constant, I can assign
+        # it a default value in the function arguments.   
+        # Ex: testFunc(argName1, argName2 = "defaultValue")     
+        args = []
+        for arg in behaviorNode["attributes"]:
+            if (arg["argType"] == "name"):
+                args.append(
+                    ast.arg(arg=arg["argName"])
+                )
+
         func_node = ast.FunctionDef(
             name=behaviorNode["behaviorName"],
-            args=[],
+            args=args,
             body=[],
             decorator_list=[],
             returns=None
