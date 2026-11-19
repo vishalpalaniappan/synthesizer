@@ -143,12 +143,21 @@ class Synthesizer:
             alias = exec("alias.aliasName", node)
             participant = exec("args[argName = 'role'].value", node)
             participantType = exec(f"**[participantName = '{participant}'].body[name = 'structural_type'].args[value].value",self.narrative)
+            persist = exec("args[argName = 'persist'].value", node)
+
+            nodes = []
+            if (persist):
+                nodes.append(ast.Global(names=[alias]))
 
             if(participantType == "list"):
-                return ast.Assign(
+                assignStmt = ast.Assign(
                     targets=[ast.Name(id=alias, ctx=ast.Store())],
                     value=ast.List(elts=[], ctx=ast.Load())
                 )
+                ast.fix_missing_locations(assignStmt)
+                nodes.append(assignStmt)
+            
+            return nodes
 
     def visit(self, astBody, narrative):
        '''

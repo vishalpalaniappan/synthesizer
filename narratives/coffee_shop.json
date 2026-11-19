@@ -24,6 +24,11 @@
                             "argName": "participant",
                             "argType": "const",
                             "value": "shopping_cart"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": true
                         }
                     ]
                 },
@@ -31,6 +36,16 @@
                     "name": "invoke",
                     "behaviorName": "visitShop",
                     "args": []
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Goodbye"
+                        }
+                    ]
                 }
             ]
         },
@@ -87,19 +102,41 @@
                     ],
                     "body": [
                         {
-                            "name": "terminal_display",
-                            "args": [
-                                {
-                                    "argName": "message",
-                                    "argType": "const",
-                                    "value": "User chose to add coffee to cart."
-                                }   
-                            ]
+                            "name": "invoke",
+                            "behaviorName": "addCoffeeToCart",
+                            "args": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "addCoffeeToCart",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "User chose to add coffee to cart."
+                        }   
+                    ]
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "args": [
+                        {
+                            "argName": "item",
+                            "argType": "const",
+                            "value": "coffee"
                         },
                         {
-                            "name": "invoke",
-                            "behaviorName": "visitShop",
-                            "args": []
+                            "argName": "list",
+                            "argType": "name",
+                            "value": "shopping_cart"
                         }
                     ]
                 }
