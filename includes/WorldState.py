@@ -1,6 +1,6 @@
 import uuid
 import json
-from LoggingHelper import semanticLogger
+from includes.LoggingHelper import semanticLogger
 
 class WorldState:
     '''
