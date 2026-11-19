@@ -60,7 +60,7 @@
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "Enter c to select coffee, anything else to exit."
+                            "value": "Enter c to select coffee, d to display shopping cart, anything else to exit."
                         }
                     ]
                 },
@@ -105,6 +105,52 @@
                             "name": "invoke",
                             "behaviorName": "addCoffeeToCart",
                             "args": []
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
+                },
+                {
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_display",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "const",
+                            "value": "d"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "name",
+                            "value": "user_chose_display"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "invoke",
+                            "behaviorName": "displayCart",
+                            "args": []
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
                         }
                     ]
                 }
@@ -135,6 +181,33 @@
                         },
                         {
                             "argName": "list",
+                            "argType": "name",
+                            "value": "shopping_cart"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "displayCart",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "User chose to display cart."
+                        }   
+                    ]
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
                             "argType": "name",
                             "value": "shopping_cart"
                         }
