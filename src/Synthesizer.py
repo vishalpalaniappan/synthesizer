@@ -23,9 +23,7 @@ class Synthesizer:
         '''
         imports = [
             "from includes.computable_primitives import *",
-            "from includes.computable_legacy_primitives import *",
-            "from includes.LoggingHelper import semanticLogger",
-            "from includes.WorldState import worldStateManager"
+            "from includes.computable_legacy_primitives import *"
         ]
         importAst = ast.parse("\n".join(imports))
         self.genAst.body.append(importAst.body)
