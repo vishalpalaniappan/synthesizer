@@ -1,0 +1,271 @@
+{
+    "$schema": "https://vishalpalaniappan.github.io/artha-primitives/img/artha.schema.json",
+    "metadata": "Meaning of Coffee Shop.",
+    "initialBehavior": "coffee_shop",
+    "narrative": [
+        {
+            "name": "behavior",
+            "behaviorName": "coffee_shop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "introduce",
+                    "alias": {
+                        "aliasName": "shopping_cart",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "Cart"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "shopping_cart"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": true
+                        }
+                    ]
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "visitShop",
+                    "args": []
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Goodbye"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "visitShop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Enter c to select coffee, d to display shopping cart, anything else to exit."
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal_input",
+                    "alias": {
+                        "aliasName": "user_choice",
+                        "introduce": true
+                    },
+                    "args": []
+                },
+                {
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_coffee",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "const",
+                            "value": "c"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "name",
+                            "value": "user_chose_coffee"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "invoke",
+                            "behaviorName": "addCoffeeToCart",
+                            "args": []
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
+                },
+                {
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_display",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "const",
+                            "value": "d"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "name",
+                            "value": "user_chose_display"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "invoke",
+                            "behaviorName": "displayCart",
+                            "args": []
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "addCoffeeToCart",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "User chose to add coffee to cart."
+                        }   
+                    ]
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "args": [
+                        {
+                            "argName": "item",
+                            "argType": "const",
+                            "value": "coffee"
+                        },
+                        {
+                            "argName": "list",
+                            "argType": "name",
+                            "value": "shopping_cart"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "displayCart",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "User chose to display cart."
+                        }   
+                    ]
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "name",
+                            "value": "shopping_cart"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "Cart",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "list"
+                        }
+                    ]
+                },
+                {
+                    "name": "list_contains",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": ["Coffee", "Bagel"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "Menu",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "string"
+                        }
+                    ]
+                },
+                {
+                    "name": "initial_value",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
