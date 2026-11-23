@@ -17,3 +17,6 @@ def multiply(multiplicand, multiplier):
 
 def get_length(list):
     return len(list)
+
+def cast_num_to_string(num):
+    return str(num)
