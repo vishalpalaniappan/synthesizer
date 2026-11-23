@@ -33,6 +33,16 @@
                     ]
                 },
                 {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "\nWelcome to Cabbage Corp Coffee Shop."
+                        }
+                    ]
+                },
+                {
                     "name": "invoke",
                     "behaviorName": "visitShop",
                     "args": []
@@ -43,7 +53,7 @@
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "Goodbye"
+                            "value": "Thanks for visiting Cabbage Corp Coffee Shop."
                         }
                     ]
                 }
@@ -372,26 +382,6 @@
                     ]
                 },
                 {
-                    "name": "terminal_display",
-                    "args": [
-                        {
-                            "argName": "message",
-                            "argType": "const",
-                            "value": "\nTotal Cost in CAD:"
-                        }
-                    ]
-                },
-                {
-                    "name": "terminal_display",
-                    "args": [
-                        {
-                            "argName": "message",
-                            "argType": "name",
-                            "value": "total_cart_cost"
-                        }
-                    ]
-                },
-                {
                     "name": "invoke",
                     "behaviorName": "acceptPayment",
                     "args": []
@@ -409,7 +399,17 @@
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "\nPlease enter the amount owed to pay bill"
+                            "value": "\nPlease enter the amount owed to pay bill (in CAD):"
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "name",
+                            "value": "total_cart_cost"
                         }
                     ]
                 },
@@ -538,7 +538,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "\"Enter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.\""
+                            "value": "\"\\nEnter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.\""
                         }
                     ]
                 }

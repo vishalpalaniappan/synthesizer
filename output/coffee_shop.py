@@ -4,11 +4,12 @@ from includes.computable_legacy_primitives import *
 def coffee_shop():
     global shopping_cart
     shopping_cart = []
+    terminal_display(message='\nWelcome to Cabbage Corp Coffee Shop.')
     visitShop()
-    terminal_display(message='Goodbye')
+    terminal_display(message='Thanks for visiting cabbage corp coffee shop.')
 
 def visitShop():
-    menu = 'Enter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.'
+    menu = '\nEnter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.'
     terminal_display(message=menu)
     user_choice = terminal_input()
     user_chose_coffee = equals(value1=user_choice, value2='a')
@@ -38,12 +39,11 @@ def checkoutCart():
     global total_cart_cost
     total_cart_cost = None
     total_cart_cost = multiply(multiplicand=numItemsInCart, multiplier=coffee_cost)
-    terminal_display(message='\nTotal Cost in CAD:')
-    terminal_display(message=total_cart_cost)
     acceptPayment()
 
 def acceptPayment():
-    terminal_display(message='\nPlease enter the amount owed to pay bill')
+    terminal_display(message='\nPlease enter the amount owed to pay bill (in CAD):')
+    terminal_display(message=total_cart_cost)
     user_payment = terminal_input()
     user_payment_num = cast_string_to_float(str=user_payment)
     payment_invalid = not_equals(value1=user_payment_num, value2=total_cart_cost)
