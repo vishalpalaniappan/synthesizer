@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "./narrative.schema.json",
   "title": "narrative-schema",
+  "$async": true,
   "description": "A schema for the narratives.",
   "type": "object",
   "required": [
@@ -29,6 +30,7 @@
   },
   "$defs": {
     "recursiveObjectCheck": {
+      "$async": true,
       "anyOf": [
         {
           "type": "object",
@@ -85,6 +87,9 @@
                             "name",
                             "const"
                           ]
+                        },
+                        "description": {
+                          "type": "string"
                         },
                         "value": {
                           "type": "string"
@@ -163,6 +168,9 @@
                             "name",
                             "const"
                           ]
+                        },
+                        "description": {
+                          "type": "string"
                         },
                         "value": {
                           "type": "string"
@@ -469,11 +477,11 @@
                         "participants": [
                           "list"
                         ],
-                        "property": "structuralType",
+                        "property": "structural_type",
                         "condition": [
                           "list"
                         ],
-                        "description": "list must have structuralType List.",
+                        "description": "list must have structural_type List.",
                         "invalidValues": [
                           {
                             "value": "string_value",
@@ -649,6 +657,121 @@
               "if": {
                 "properties": {
                   "name": {
+                    "const": "get_length"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./get_length.schema.json",
+                "title": "get_length",
+                "description": "Structural schema for get_length primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "get_length",
+                    "x-invariant-metadata": [
+                      {
+                        "id": "1",
+                        "participants": [
+                          "list"
+                        ],
+                        "property": "structural_type",
+                        "condition": [
+                          "list"
+                        ],
+                        "description": "list must have structural_type List.",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as list participant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-primitive"
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "list"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "aliasName"
+                    ],
+                    "properties": {
+                      "aliasName": {
+                        "type": "string"
+                      },
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "const": "int"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
                     "const": "insert_at_end_of_list"
                   }
                 },
@@ -766,6 +889,166 @@
               "if": {
                 "properties": {
                   "name": {
+                    "const": "multiply"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./multiply.schema.json",
+                "title": "multiply",
+                "description": "Structural schema for multiply primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "multiply",
+                    "x-invariant-metadata": [
+                      {
+                        "id": "1",
+                        "participants": [
+                          "multiplicand"
+                        ],
+                        "property": "structural_type",
+                        "condition": [
+                          "float",
+                          "int"
+                        ],
+                        "description": "multiplicand must have structural_type float or int.",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as multiplicand participant"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "2",
+                        "participants": [
+                          "multiplier"
+                        ],
+                        "property": "structural_type",
+                        "condition": [
+                          "float",
+                          "int"
+                        ],
+                        "description": "multiplier must have structural_type float or int.",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as multiplier participant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-primitive"
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "multiplicand"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "multiplier"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "aliasName"
+                    ],
+                    "properties": {
+                      "aliasName": {
+                        "type": "string"
+                      },
+                      "aliasStructuralType": {
+                        "type": "string",
+                        "const": "float"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
                     "const": "if"
                   }
                 },
@@ -800,7 +1083,7 @@
                         "participants": [
                           "condition"
                         ],
-                        "property": "structuralType",
+                        "property": "structural_type",
                         "condition": [
                           "boolean"
                         ],
@@ -921,9 +1204,7 @@
                               "const"
                             ]
                           },
-                          "value": {
-                            "type": "string"
-                          }
+                          "value": {}
                         },
                         "required": [
                           "argName",
@@ -979,8 +1260,8 @@
                   },
                   "args": {
                     "type": "array",
-                    "minItems": 2,
-                    "maxItems": 2,
+                    "minItems": 3,
+                    "maxItems": 3,
                     "prefixItems": [
                       {
                         "type": "object",
@@ -1025,6 +1306,32 @@
                           },
                           "value": {
                             "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "persist"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {
+                            "type": "boolean"
                           }
                         },
                         "required": [
@@ -1318,7 +1625,7 @@
     }
   },
   "manifest": {
-    "$schema": "./manifest.schema.json",
+    "$schema": "./schemas/manifest-schema/manifest.schema.json",
     "primitiveTypes": [
       "computable-primitive",
       "functional-primitive",
