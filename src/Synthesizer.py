@@ -141,21 +141,17 @@ class Synthesizer:
         # TODO: participant can also have initial value etc.
         if (node["name"] == "introduce"):
             alias = exec("alias.aliasName", node)
-            participant = exec("args[argName = 'role'].value", node)
+            participant = exec("args[argName = 'participant'].value", node)
             participantType = exec(f"**[participantName = '{participant}'].body[name = 'structural_type'].args[value].value",self.narrative)
+            initialValue = exec(f"**[participantName = '{participant}'].body[name = 'initial_value'].args[argName = 'value'].value",self.narrative)
             persist = exec("args[argName = 'persist'].value", node)
 
             nodes = []
             if (persist):
                 nodes.append(ast.Global(names=[alias]))
 
-            if(participantType == "list"):
-                assignStmt = ast.Assign(
-                    targets=[ast.Name(id=alias, ctx=ast.Store())],
-                    value=ast.List(elts=[], ctx=ast.Load())
-                )
-                ast.fix_missing_locations(assignStmt)
-                nodes.append(assignStmt)
+            # Engine will verify that initial value is correct type
+            nodes.append(ast.parse(f"{alias} = {initialValue}").body)
             
             return nodes
 

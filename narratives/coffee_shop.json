@@ -18,12 +18,12 @@
                         {
                             "argName": "role",
                             "argType": "const",
-                            "value": "Cart"
+                            "value": "shopping_cart"
                         },
                         {
                             "argName": "participant",
                             "argType": "const",
-                            "value": "shopping_cart"
+                            "value": "Cart"
                         },
                         {
                             "argName": "persist",
@@ -55,12 +55,36 @@
             "attributes": [],
             "body": [
                 {
+                    "name": "introduce",
+                    "alias": {
+                        "aliasName": "menu",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "menu"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "Menu"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": false
+                        }
+                    ]
+                },
+                {
                     "name": "terminal_display",
                     "args": [
                         {
                             "argName": "message",
-                            "argType": "const",
-                            "value": "Enter c to select coffee, d to display shopping cart, anything else to exit."
+                            "argType": "name",
+                            "value": "menu"
                         }
                     ]
                 },
@@ -225,7 +249,17 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "list"
+                            "value": "string"
+                        }
+                    ]
+                },
+                {
+                    "name": "initial_value",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": []
                         }
                     ]
                 },
@@ -261,7 +295,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
+                            "value": "\"Enter c to select coffee, d to display shopping cart, anything else to exit.\""
                         }
                     ]
                 }

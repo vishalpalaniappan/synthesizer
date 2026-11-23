@@ -10,15 +10,17 @@ def coffee_shop():
     terminal_display(message='Goodbye')
 
 def visitShop():
-    terminal_display(message='Enter c to select coffee, anything else to exit.')
+    menu = 'Enter c to select coffee, d to display shopping cart, anything else to exit.'
+    terminal_display(message=menu)
     user_choice = terminal_input()
     user_chose_coffee = equals(value1=user_choice, value2='c')
     if user_chose_coffee:
         addCoffeeToCart()
+        visitShop()
     user_chose_display = equals(value1=user_choice, value2='d')
     if user_chose_display:
         displayCart()
-    visitShop()
+        visitShop()
 
 def addCoffeeToCart():
     terminal_display(message='User chose to add coffee to cart.')
