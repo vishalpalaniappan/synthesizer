@@ -1,7 +1,5 @@
 from includes.computable_primitives import *
 from includes.computable_legacy_primitives import *
-from includes.LoggingHelper import semanticLogger
-from includes.WorldState import worldStateManager
 
 def coffee_shop():
     global shopping_cart
@@ -17,9 +15,11 @@ def visitShop():
     if user_chose_coffee:
         addCoffeeToCart()
         visitShop()
+        visitShop()
     user_chose_display = equals(value1=user_choice, value2='d')
     if user_chose_display:
         displayCart()
+        visitShop()
         visitShop()
 
 def addCoffeeToCart():
