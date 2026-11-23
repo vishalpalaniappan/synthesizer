@@ -111,7 +111,7 @@
                         {
                             "argName": "value2",
                             "argType": "const",
-                            "value": "c"
+                            "value": "a"
                         }
                     ]
                 },
@@ -169,6 +169,47 @@
                         {
                             "name": "invoke",
                             "behaviorName": "displayCart",
+                            "args": []
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
+                },
+                {
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_checkout",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "const",
+                            "value": "c"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "name",
+                            "value": "user_chose_checkout"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "invoke",
+                            "behaviorName": "checkoutCart",
                             "args": []
                         },
                         {
@@ -240,6 +281,33 @@
             ]
         },
         {
+            "name": "behavior",
+            "behaviorName": "checkoutCart",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "User chose to checkout cart."
+                        }   
+                    ]
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Feature hasn't been implemented yet."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "participant",
             "participantName": "Cart",
             "body": [
@@ -295,7 +363,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "\"Enter c to select coffee, d to display shopping cart, anything else to exit.\""
+                            "value": "\"Enter a to add coffee to cart, d to display shopping cart, c to checkout and anything else to exit.\""
                         }
                     ]
                 }

@@ -8,16 +8,20 @@ def coffee_shop():
     terminal_display(message='Goodbye')
 
 def visitShop():
-    menu = 'Enter c to select coffee, d to display shopping cart, anything else to exit.'
+    menu = 'Enter a to add coffee to cart, d to display shopping cart, c to checkout and anything else to exit.'
     terminal_display(message=menu)
     user_choice = terminal_input()
-    user_chose_coffee = equals(value1=user_choice, value2='c')
+    user_chose_coffee = equals(value1=user_choice, value2='a')
     if user_chose_coffee:
         addCoffeeToCart()
         visitShop()
     user_chose_display = equals(value1=user_choice, value2='d')
     if user_chose_display:
         displayCart()
+        visitShop()
+    user_chose_checkout = equals(value1=user_choice, value2='c')
+    if user_chose_checkout:
+        checkoutCart()
         visitShop()
 
 def addCoffeeToCart():
@@ -27,5 +31,9 @@ def addCoffeeToCart():
 def displayCart():
     terminal_display(message='User chose to display cart.')
     terminal_display(message=shopping_cart)
+
+def checkoutCart():
+    terminal_display(message='User chose to checkout cart.')
+    terminal_display(message="Feature hasn't been implemented yet.")
 if __name__ == '__main__':
     coffee_shop()
