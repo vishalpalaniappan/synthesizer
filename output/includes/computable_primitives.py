@@ -17,3 +17,6 @@ def multiply(multiplicand, multiplier):
 
 def get_length(list):
     return len(list)
+
+def cast_string_to_float(str):
+    return float(str)

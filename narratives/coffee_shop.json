@@ -211,11 +211,6 @@
                             "name": "invoke",
                             "behaviorName": "checkoutCart",
                             "args": []
-                        },
-                        {
-                            "name": "invoke",
-                            "behaviorName": "visitShop",
-                            "args": []
                         }
                     ]
                 }
@@ -382,7 +377,7 @@
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "Total Cost in CAD:"
+                            "value": "\nTotal Cost in CAD:"
                         }
                     ]
                 },
@@ -414,7 +409,7 @@
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "Please enter the amount owed to pay bill"
+                            "value": "\nPlease enter the amount owed to pay bill"
                         }
                     ]
                 },
@@ -427,6 +422,19 @@
                     "args": []
                 },
                 {
+                    "name": "cast_string_to_float",
+                    "alias": {
+                        "aliasName": "user_payment_num"
+                    },
+                    "args": [
+                        {
+                            "argName": "str",
+                            "argType": "name",
+                            "value": "user_payment"
+                        }
+                    ]
+                },
+                {
                     "name": "not_equals",
                     "alias": {
                         "aliasName": "payment_invalid",
@@ -436,7 +444,7 @@
                         {
                             "argName": "value1",
                             "argType": "name",
-                            "value": "user_payment"
+                            "value": "user_payment_num"
                         },
                         {
                             "argName": "value2",
@@ -461,9 +469,14 @@
                                 {
                                     "argName": "message",
                                     "argType": "const",
-                                    "value": "Payment invalid, try again. (always false currently)"
+                                    "value": "Payment invalid, try again."
                                 }
                             ]
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "acceptPayment",
+                            "args": []
                         }
                     ]
                 }
