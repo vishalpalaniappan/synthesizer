@@ -34,6 +34,10 @@ def displayCart():
 
 def checkoutCart():
     terminal_display(message='User chose to checkout cart.')
-    terminal_display(message="Feature hasn't been implemented yet.")
+    numItemsInCart = get_length(list=shopping_cart)
+    coffee_cost = 1.8
+    cost = multiply(multiplicand=numItemsInCart, multiplier=coffee_cost)
+    terminal_display(message='Total Cost in CAD:')
+    terminal_display(message=cost)
 if __name__ == '__main__':
     coffee_shop()
