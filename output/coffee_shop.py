@@ -8,7 +8,7 @@ def coffee_shop():
     terminal_display(message='Goodbye')
 
 def visitShop():
-    menu = 'Enter a to add coffee to cart, d to display shopping cart, c to checkout and anything else to exit.'
+    menu = 'Enter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.'
     terminal_display(message=menu)
     user_choice = terminal_input()
     user_chose_coffee = equals(value1=user_choice, value2='a')
@@ -36,8 +36,20 @@ def checkoutCart():
     terminal_display(message='User chose to checkout cart.')
     numItemsInCart = get_length(list=shopping_cart)
     coffee_cost = 1.8
-    cost = multiply(multiplicand=numItemsInCart, multiplier=coffee_cost)
+    global total_cart_cost
+    total_cart_cost = None
+    total_cart_cost = multiply(multiplicand=numItemsInCart, multiplier=coffee_cost)
     terminal_display(message='Total Cost in CAD:')
-    terminal_display(message=cost)
+    terminal_display(message=total_cart_cost)
+    acceptPayment()
+
+def acceptPayment():
+    terminal_display(message='Please enter the amount owed to pay bill')
+    user_payment = terminal_input()
+    payment_invalid = not_equals(value1=user_payment, value2=total_cart_cost)
+    print(type(user_payment), type(total_cart_cost))
+    print(user_payment, total_cart_cost)
+    if payment_invalid:
+        terminal_display(message='Payment invalid, try again.')
 if __name__ == '__main__':
     coffee_shop()

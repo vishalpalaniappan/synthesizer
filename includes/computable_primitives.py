@@ -9,6 +9,9 @@ def clear_list(list):
 def equals(value1, value2):
     return value1 == value2
 
+def not_equals(value1, value2):
+    return value1 != value2
+
 def multiply(multiplicand, multiplier):
     return multiplicand * multiplier
 

@@ -334,9 +334,33 @@
                     ]
                 },
                 {
+                    "name": "introduce",
+                    "alias": {
+                        "aliasName": "total_cart_cost",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "total_cart_cost"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "TotalCost"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": true
+                        }
+                    ]
+                },
+                {
                     "name": "multiply",
                     "alias": {
-                        "aliasName": "cost",
+                        "aliasName": "total_cart_cost",
                         "aliasStructuralType": "float"
                     },
                     "args": [
@@ -368,7 +392,78 @@
                         {
                             "argName": "message",
                             "argType": "name",
-                            "value": "cost"
+                            "value": "total_cart_cost"
+                        }
+                    ]
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "acceptPayment",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "acceptPayment",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Please enter the amount owed to pay bill"
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal_input",
+                    "alias": {
+                        "aliasName": "user_payment",
+                        "aliasStructuralType": "string"
+                    },
+                    "args": []
+                },
+                {
+                    "name": "not_equals",
+                    "alias": {
+                        "aliasName": "payment_invalid",
+                        "aliasStructuralType": "boolean"
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_payment"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "name",
+                            "value": "total_cart_cost"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "name",
+                            "value": "payment_invalid"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "terminal_display",
+                            "args": [
+                                {
+                                    "argName": "message",
+                                    "argType": "const",
+                                    "value": "Payment invalid, try again. (always false currently)"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -430,7 +525,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "\"Enter a to add coffee to cart, d to display shopping cart, c to checkout and anything else to exit.\""
+                            "value": "\"Enter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.\""
                         }
                     ]
                 }
@@ -457,6 +552,22 @@
                             "argName": "value",
                             "argType": "const",
                             "value": 1.80
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "TotalCost",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "float"
                         }
                     ]
                 }
