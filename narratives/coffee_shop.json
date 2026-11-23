@@ -296,12 +296,79 @@
                     ]
                 },
                 {
+                    "name": "get_length",
+                    "alias": {
+                        "aliasName": "numItemsInCart",
+                        "aliasStructuralType": "int"
+                    },
+                    "args": [
+                        {
+                            "argName": "list",
+                            "argType": "name",
+                            "value": "shopping_cart"
+                        }
+                    ]
+                },
+                {
+                    "name": "introduce",
+                    "alias": {
+                        "aliasName": "coffee_cost",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "coffee_cost"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "CostOfCoffee"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": false
+                        }
+                    ]
+                },
+                {
+                    "name": "multiply",
+                    "alias": {
+                        "aliasName": "cost",
+                        "aliasStructuralType": "float"
+                    },
+                    "args": [
+                        {
+                            "argName": "multiplicand",
+                            "argType": "name",
+                            "value": "numItemsInCart"
+                        },
+                        {
+                            "argName": "multiplier",
+                            "argType": "name",
+                            "value": "coffee_cost"
+                        }
+                    ]
+                },
+                {
                     "name": "terminal_display",
                     "args": [
                         {
                             "argName": "message",
                             "argType": "const",
-                            "value": "Feature hasn't been implemented yet."
+                            "value": "Total Cost in CAD:"
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "name",
+                            "value": "cost"
                         }
                     ]
                 }
@@ -364,6 +431,32 @@
                             "argName": "value",
                             "argType": "const",
                             "value": "\"Enter a to add coffee to cart, d to display shopping cart, c to checkout and anything else to exit.\""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "participant",
+            "participantName": "CostOfCoffee",
+            "body": [
+                {
+                    "name": "structural_type",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "float"
+                        }
+                    ]
+                },
+                {
+                    "name": "initial_value",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": 1.80
                         }
                     ]
                 }
