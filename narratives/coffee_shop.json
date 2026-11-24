@@ -218,6 +218,16 @@
                     ],
                     "body": [
                         {
+                            "name": "terminal_display",
+                            "args": [
+                                {
+                                    "argName": "message",
+                                    "argType": "const",
+                                    "value": "User chose to checkout cart."
+                                }   
+                            ]
+                        },
+                        {
                             "name": "invoke",
                             "behaviorName": "checkoutCart",
                             "args": []
@@ -290,16 +300,6 @@
             "behaviorName": "checkoutCart",
             "attributes": [],
             "body": [
-                {
-                    "name": "terminal_display",
-                    "args": [
-                        {
-                            "argName": "message",
-                            "argType": "const",
-                            "value": "User chose to checkout cart."
-                        }   
-                    ]
-                },
                 {
                     "name": "get_length",
                     "alias": {
@@ -382,18 +382,6 @@
                     ]
                 },
                 {
-                    "name": "invoke",
-                    "behaviorName": "acceptPayment",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "name": "behavior",
-            "behaviorName": "acceptPayment",
-            "attributes": [],
-            "body": [
-                {
                     "name": "terminal_display",
                     "args": [
                         {
@@ -475,7 +463,7 @@
                         },
                         {
                             "name": "invoke",
-                            "behaviorName": "acceptPayment",
+                            "behaviorName": "checkoutCart",
                             "args": []
                         }
                     ]
