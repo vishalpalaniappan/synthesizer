@@ -233,6 +233,62 @@
                             "args": []
                         }
                     ]
+                },
+                {
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_remove",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "const",
+                            "value": "r"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "name",
+                            "value": "user_chose_remove"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "terminal_display",
+                            "args": [
+                                {
+                                    "argName": "message",
+                                    "argType": "const",
+                                    "value": "User chose to remove item from cart."
+                                }   
+                            ]
+                        },
+                        {
+                            "name": "remove_from_end_of_list",
+                            "args": [
+                                {
+                                    "argName": "list",
+                                    "argType": "name",
+                                    "value": "shopping_cart"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
                 }
             ]
         },
@@ -526,7 +582,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "\"\\nEnter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.\""
+                            "value": "\"\\nEnter a to add coffee to cart($1.80), d to display shopping cart, c to checkout, r to remove from cart and anything else to exit.\""
                         }
                     ]
                 }
