@@ -1,13 +1,8 @@
-import json
+
 import ast
 import jsonata
-from pathlib import Path
 
-schema_path = Path(__file__).resolve().parent.parent / "schema" / "artha.schema.json"
-with open(schema_path, "r", encoding="utf-8") as f:
-    schema_data = json.load(f)
-
-def get_primitive_schema(primitiveName: str):
+def get_primitive_schema(primitiveName: str, schema: object):
     '''
         This is a bit crude, I am searching the schema to find the schema for
         the particular node I am visiting. Then I use the schema to find out
@@ -15,7 +10,6 @@ def get_primitive_schema(primitiveName: str):
         I will establish the primitive schemas in definitions and use them, so that
         it can be accessed directly.
     '''
-    data = schema_data
 
     def search(node):
         if isinstance(node, dict):
@@ -30,7 +24,7 @@ def get_primitive_schema(primitiveName: str):
                 if result: return result
         return None
 
-    return search(data)
+    return search(schema)
 
 def exec(expression: str, item):
     return jsonata.Jsonata(expression).evaluate(item)

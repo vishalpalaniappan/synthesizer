@@ -8,8 +8,9 @@ from helper import exec
 
 class Synthesizer:
 
-    def __init__(self, arthaIR):
+    def __init__(self, arthaIR, schema):
         self.genAst = ast.Module([], [])
+        self.schema = schema
         self.narrative = arthaIR["narrative"]
         self.initialBehavior = arthaIR["initialBehavior"]
         self.addImports()
@@ -167,7 +168,7 @@ class Synthesizer:
             elif node["name"] == "if":
                 self.synthesizeIf(ifNode = node, astBody = astBody)
             else:
-                schema = get_primitive_schema(primitiveName = node["name"])
+                schema = get_primitive_schema(primitiveName = node["name"], schema = self.schema)
                 type = schema["properties"]["primitiveType"]["const"]
 
                 if (type == "computable-primitive" or type == "computable-legacy-primitive"):
