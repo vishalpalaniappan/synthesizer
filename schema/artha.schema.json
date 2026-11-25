@@ -366,6 +366,10 @@
                       "introduce": {
                         "type": "boolean",
                         "default": false
+                      },
+                      "persist": {
+                        "type": "boolean",
+                        "default": false
                       }
                     }
                   }
@@ -432,6 +436,10 @@
                         "const": "string"
                       },
                       "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "persist": {
                         "type": "boolean",
                         "default": false
                       }
@@ -545,6 +553,10 @@
                         "const": "float"
                       },
                       "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "persist": {
                         "type": "boolean",
                         "default": false
                       }
@@ -741,6 +753,10 @@
                         ],
                         "additionalProperties": false
                       }
+                    ],
+                    "$exists": [
+                      "value1",
+                      "value2"
                     ]
                   },
                   "alias": {
@@ -758,6 +774,10 @@
                         "const": "boolean"
                       },
                       "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "persist": {
                         "type": "boolean",
                         "default": false
                       }
@@ -856,6 +876,9 @@
                         ],
                         "additionalProperties": false
                       }
+                    ],
+                    "$exists": [
+                      "list"
                     ]
                   },
                   "alias": {
@@ -873,6 +896,10 @@
                         "const": "int"
                       },
                       "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "persist": {
                         "type": "boolean",
                         "default": false
                       }
@@ -1152,6 +1179,10 @@
                       "introduce": {
                         "type": "boolean",
                         "default": false
+                      },
+                      "persist": {
+                        "type": "boolean",
+                        "default": false
                       }
                     }
                   }
@@ -1270,8 +1301,105 @@
                       "introduce": {
                         "type": "boolean",
                         "default": false
+                      },
+                      "persist": {
+                        "type": "boolean",
+                        "default": false
                       }
                     }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "name": {
+                    "const": "remove_from_end_of_list"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "then": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "./remove_from_end_of_list.schema.json",
+                "title": "remove_from_end_of_list",
+                "description": "Structural schema for remove_from_end_of_list primitive.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
+                "properties": {
+                  "$schema": {
+                    "type": "string",
+                    "description": "URI reference to the JSON schema."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the primitive.",
+                    "const": "remove_from_end_of_list",
+                    "x-invariant-metadata": [
+                      {
+                        "id": "1",
+                        "participants": [
+                          "list"
+                        ],
+                        "property": "structural_type",
+                        "condition": [
+                          "list"
+                        ],
+                        "description": "list must have structural_type List.",
+                        "invalidValues": [
+                          {
+                            "value": "string_value",
+                            "description": "A string is provided as list participant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "primitiveType": {
+                    "type": "string",
+                    "description": "Type of the primitive.",
+                    "const": "computable-primitive"
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "list"
+                          },
+                          "argType": {
+                            "type": "string",
+                            "description": "Type of arg value (name or const).",
+                            "enum": [
+                              "name",
+                              "const"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value",
+                          "argType"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
                   }
                 }
               }
@@ -1589,6 +1717,10 @@
                         "const": "boolean"
                       },
                       "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "persist": {
                         "type": "boolean",
                         "default": false
                       }

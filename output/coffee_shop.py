@@ -9,7 +9,7 @@ def coffee_shop():
     terminal_display(message='Thanks for visiting Cabbage Corp Coffee Shop.')
 
 def visitShop():
-    menu = '\nEnter a to add coffee to cart($1.80), d to display shopping cart, c to checkout and anything else to exit.'
+    menu = '\nEnter a to add coffee to cart($1.80), d to display shopping cart, c to checkout, r to remove from cart and anything else to exit.'
     terminal_display(message=menu)
     user_choice = terminal_input()
     user_chose_coffee = equals(value1=user_choice, value2='a')
@@ -24,6 +24,11 @@ def visitShop():
     if user_chose_checkout:
         terminal_display(message='User chose to checkout cart.')
         checkoutCart()
+    user_chose_remove = equals(value1=user_choice, value2='r')
+    if user_chose_remove:
+        terminal_display(message='User chose to remove item from cart.')
+        remove_from_end_of_list(list=shopping_cart)
+        visitShop()
 
 def addCoffeeToCart():
     terminal_display(message='User chose to add coffee to cart.')

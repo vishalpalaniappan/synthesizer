@@ -2,6 +2,10 @@ def insert_at_end_of_list(item, list):
     list.append(item)
     return list
 
+def remove_from_end_of_list(list):
+    list.pop()
+    return list
+
 def clear_list(list):
     list = []
     return list
