@@ -37,6 +37,7 @@ def main(argv):
     with open(root_dir / "narratives" / "coffee_shop.json", "r") as f:
         arthaIR = json.loads(f.read())
 
+    # Synthesize the implementation and generate the output
     synthesizer = Synthesizer(arthaIR, schema)
     synthesizer.generateOutput()
 
